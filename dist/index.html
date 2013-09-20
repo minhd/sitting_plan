@@ -1,0 +1,46 @@
+<html ng-app="plan">
+<head>
+	<title>Sitting Plan test</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+	<link rel="stylesheet" href="css/vendor.css">
+
+	<link rel="stylesheet" href="css/app.css" media="screen, projection">
+
+</head>
+<body>
+
+<div class="container">
+	<div ng-view></div>
+</div>
+
+	<div class="hide" id="main">
+		<div class="row">
+			<div class="col-lg-12">
+				<a ng-click="randomSeatingUnavailable()" class="btn btn-danger" title="Make random seating unavailable" tooltip >Random Seating</a>
+				Group Size: <input type="number" ng-model="group_size">
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-lg-12">
+				<span ng-repeat="row in main.rows">
+					<div class="row">
+						<span ng-repeat="seat in row.seats" class="seat ng-class:seat.available" ng-click="selectSeat(seat)">
+							{{seat.name}}
+						</span>
+					</div>
+				</span>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-lg-12">
+				You selected: <span ng-repeat="seat in selected">{{seat.name}}</span>
+			</div>
+		</div>
+	</div>
+
+	<script src="js/vendor.js"></script>
+
+	<script src="js/app.js"></script>
+</body>
+</html>
