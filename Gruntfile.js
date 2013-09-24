@@ -23,7 +23,8 @@ module.exports = function(grunt){
 		},
 		useminPrepare:{
 			options: {
-				dest: '<%= yeoman.dist %>'
+				dest: '<%= yeoman.dist %>',
+				uglify: 'uglify'
 			},
 			html: '<%= yeoman.app %>/index.html'
 		},
@@ -57,12 +58,36 @@ module.exports = function(grunt){
 		watch: {
 			compass: {
 				files: ['<%= yeoman.app %>/styles/sass/{,*/}*.{scss,sass}'],
-				tasks: ['compass:dev']
+				tasks: ['compass:dev'],
+				livereload:true
 			}
 		},
 		uglify:{
 			options:{
 				mangle: false
+			}
+		},
+		concurrent:{
+			dev: [
+				'watch:compass'
+			]
+		},
+		connect:{
+			options:{
+				port: 9000,
+				hostname: 'localhost'
+			},
+			dev:{
+				options:{
+					base:'<%= yeoman.app %>',
+					//keepalive: true,
+					livereload:true
+				}
+			}
+		},
+		open:{
+			dev:{
+				path: 'http://localhost:<%= connect.options.port %>'
 			}
 		}
 	});
@@ -84,6 +109,8 @@ module.exports = function(grunt){
 	]);
 
 	grunt.registerTask('dev', [
+		'connect:dev',
+		'open:dev',
 		'watch:compass'
 	]);
 }
